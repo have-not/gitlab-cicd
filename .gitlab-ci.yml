@@ -1,0 +1,24 @@
+#Dockerイメージを指定する
+#セキュリティ的にはscratchで自分で作るほうが良い
+#https://hub.docker.com/r/library/python/tags/
+image: python:latest
+
+stages:
+#  - build
+  - test
+#  - deploy
+
+codecheck:
+  stage: test
+  script:
+    - pip install pycodestyle
+    - pycodestyle ./
+  only:
+    - master
+
+unittest:
+  stage: test
+  script:
+    - python src/setup.py test
+  only:
+    - master
